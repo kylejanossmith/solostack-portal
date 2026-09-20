@@ -1,2 +1,91 @@
-# solostack-portal
-SoloStack customer portal — Next.js + Clerk auth on Vercel
+# SoloStack Customer Portal
+
+Next.js (App Router) + TypeScript + Tailwind CSS + [Clerk](https://clerk.com) customer login portal for SoloStack.
+
+**Live repo:** https://github.com/kylejanossmith/solostack-portal
+
+**Local path (Money Maker box):** `/workspace/money-maker/apps/solostack-portal`
+
+## Architecture
+
+| Layer | Role |
+| --- | --- |
+| **This website (solostack-portal)** | Customer accounts & UI only — sign-in, dashboard, product links. |
+| **Money Maker box** | Kyle ops only. Not multi-tenant customer compute. Customers never run workloads on the box. |
+
+Connected services on the dashboard are placeholders until integrations ship. Product delivery today is via Gumroad links.
+
+## Features
+
+- Marketing landing (`/`) — Job Search OS pitch (NZ$15), compliance: organizer only
+- Clerk sign-in / sign-up (`/sign-in`, `/sign-up`)
+- Protected dashboard (`/dashboard`) with product cards:
+  - [Job Search OS](https://kylejanos.gumroad.com/l/aijqck)
+  - [Free follow-up checklist](https://kylejanos.gumroad.com/l/gloqxz)
+- Dark SoloStack navy branding (`#0b1220` / `#111b2e` / `#3b82f6`)
+
+## Local development
+
+### 1. Prerequisites
+
+- Node.js 20+
+- A Clerk application ([dashboard.clerk.com](https://dashboard.clerk.com))
+
+### 2. Install & configure env
+
+```bash
+cd /workspace/money-maker/apps/solostack-portal   # or clone this repo
+npm install
+cp .env.example .env.local
+```
+
+Edit `.env.local` with your Clerk keys:
+
+```env
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_...
+CLERK_SECRET_KEY=sk_test_...
+NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
+NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/dashboard
+NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/dashboard
+```
+
+### 3. Clerk dashboard setup
+
+1. Create an application (Email / Google / etc. as you prefer).
+2. Copy **Publishable key** and **Secret key** into `.env.local`.
+3. Under **Paths** (or Configure → Paths), set:
+   - Sign-in URL: `/sign-in`
+   - Sign-up URL: `/sign-up`
+   - After sign-in: `/dashboard`
+   - After sign-up: `/dashboard`
+4. Add allowed redirect / origin URLs for local (`http://localhost:3000`) and production (your Vercel domain).
+
+### 4. Run
+
+```bash
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000).
+
+```bash
+npm run build   # production build
+npm start       # serve production build
+```
+
+## Deploy to Vercel
+
+1. Import https://github.com/kylejanossmith/solostack-portal into Vercel.
+2. Framework preset: **Next.js**.
+3. Add the same env vars from `.env.example` (use production Clerk keys for a live app).
+4. Deploy. Update Clerk allowed origins / redirect URLs to the Vercel URL.
+5. Optional: set a custom domain in Vercel and add it in Clerk.
+
+## Compliance
+
+Job Search OS is an **organizer only** — not career counseling, recruiting, legal, or immigration advice. No job or salary outcomes are guaranteed.
+
+## License
+
+© SoloStack. All rights reserved.
