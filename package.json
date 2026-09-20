@@ -5,9 +5,11 @@
   "description": "SoloStack customer login portal",
   "scripts": {
     "dev": "next dev --turbopack",
+    "prebuild": "node scripts/ensure-logo.cjs",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "postinstall": "node scripts/ensure-logo.cjs"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.39.7",
