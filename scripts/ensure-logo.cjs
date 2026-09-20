@@ -3,7 +3,7 @@ const fs = require("fs");
 const path = require("path");
 const dir = __dirname;
 const out = path.join(dir, "..", "public", "solostack-pfp.png");
-const parts = ["solostack-pfp.png.b64.part1", "solostack-pfp.png.b64.part2"].map((f) =>
+const parts = ["solostack-pfp.png.b64.part1", "solostack-pfp.png.b64.part2", "solostack-pfp.png.b64.part3", "solostack-pfp.png.b64.part4"].map((f) =>
   fs.readFileSync(path.join(dir, f), "utf8").trim()
 );
 const b64 = parts.join("");
